@@ -94,8 +94,7 @@ button {
   text-align: center; }
 
 .signup-info {
-  padding: 5px;
-  margin-left: 50px; }
+  padding: 5px; }
 
 .signup-labels {
   width: 30px;
@@ -181,7 +180,10 @@ button {
   text-decoration: underline; }
 
 .button-centered {
-  margin-left: 350px;
-  margin-top: 20px; }
+  margin-top: 20px;
+  text-align: center; }
+
+.not-display {
+  display: none; }
 
 /*# sourceMappingURL=style.css.map */

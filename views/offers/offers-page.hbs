@@ -3,16 +3,14 @@
 <div class="offers-page-outer-div">
 <div class="offers-page-div">
 
- 
-
-<div><label>Company:     </label>{{this.companyName}}</div><br>
-<div><label>Industry:     </label>{{this.industry}}</div><br>
-
-  <div><label>Discount: </label>enjoy 50% off of everything</div><br>
-
-
-<a href='/user-page'><button class='btn-success bg-success'>Accept</button></a>
-<a href='/user-page'><button class='btn-danger bg-danger'>No Thanks</button></a>
+<div><label>Company:</label>{{this.companyName}}</div><br>
+<div><label>Industry:</label>{{this.industry}}</div><br>
+<div><label>Discount:</label>enjoy 50% off of everything</div><br>
+<form action='/create-deal' method="POST">
+<input name='id' value='{{this._id}}' class="not-display">
+<button type='submit' class='btn-success bg-success'>Accept</button>
+</form>
+<button class='btn-danger bg-danger'>No Thanks</button>
 </div>
 
 </div>

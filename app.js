@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const bodyParser   = require('body-parser');
 const cookieParser = require('cookie-parser');
+const MongoStore   = require('connect-to-mongo');
 const express      = require('express');
 const favicon      = require('serve-favicon');
 const hbs          = require('hbs');
@@ -14,15 +15,13 @@ const flash        = require('connect-flash');
 
 require('./config/passport');
 
-mongoose.Promise = Promise;
-mongoose
-  .connect(process.env.MONGODB_URI, { useNewUrlParser: true })
-  .then(x => {
-    console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
-  })
-  .catch(err => {
-    console.error('Error connecting to mongo', err)
-  });
+mongoose.connect(process.env.MONGODB_URI || 3000, {useNewUrlParser: true})
+.then(x => {
+  console.log(`Connected to Mongo! Database name: "${x.connections[0].name}"`)
+})
+.catch(err => {
+  console.error('Error connecting to mongo', err)
+});
 
 const app_name = require('./package.json').name;
 const debug = require('debug')(`${app_name}:${path.basename(__filename).split('.')[0]}`);
@@ -61,7 +60,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(function(req, res, next) {
-  res.locals.theUser = req.user;
+  res.locals.user = req.user;
   next();
 });
 

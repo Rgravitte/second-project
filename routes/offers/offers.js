@@ -5,14 +5,15 @@ const Offer = require('../../models/Offers');
 const Deals = require('../../models/Deals');
 
 router.get('/offers-page', (req, res, next)=>{
-  Offer.find()    
+  // Offer.find()    
+  res.render('/offers-page', {offer: equalInterests})
   // Deals.find()
   .then((response)=>{
     //  console.log('-------=======----------==========----------', Deals.isAccepted);
     
     
     console.log('===========&&&&&&&&&&&============&&&&&&&&&&===========', response)
-    const equalInterests = response.filter(offer)
+    // const equalInterests = response.filter(offer)
     // =>{
     //   for(let i = 0; i < req.user.interests.length; i++){
     //     if(offer.industry === req.user.interests[i]){
@@ -20,7 +21,6 @@ router.get('/offers-page', (req, res, next)=>{
     //     }
     //   }
     // })
-    res.render('/offers-page', {offer: equalInterests})
   })
   // .then(()=>{
     // if the deals accepted === fals then i want to delete the deals

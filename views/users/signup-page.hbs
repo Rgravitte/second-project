@@ -44,6 +44,9 @@
     <label class="signup-labels col-3">Travel</label><input class="singup-labelse col-1" type="checkbox" name="interests" value='Travel'>
     </div>
     </div>
+    {{#if message}}
+    <p>{{message}}</p>
+    {{/if}}
   <button type="submit" class='btn-primary button-centered' placeholder="signup">Sign Up</button>
     {{!-- <div class='col-4'></div> --}}
 </div>

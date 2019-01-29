@@ -13,7 +13,7 @@ router.get('/login', (req, res, nexrt)=>{
   res.render('users/user-login-page');
 });
 
-router.post('/users/signup-page', (req, res, next)=>{
+router.post('/users/user-page', (req, res, next)=>{
 const salt = bcryptjs.genSaltSync(10);
 const hashPass = bcryptjs.hashSync(req.body.password, salt);
   User.create({
@@ -27,39 +27,39 @@ const hashPass = bcryptjs.hashSync(req.body.password, salt);
   .then((newUser)=>{
     req.login(newUser, (err)=>{
       if(err){
-        next(err)
+        let message = `Invalid inputs`;
+        console.log("invalid input", message);
+        res.render('/users/signup-page');
       }else{
-        res.redirect('/user-page')
+        res.redirect('/user-page');
       }
     })
   })
-  .catch((err)=>{
-    console.log('09090909090909090909090909090909090909090909090909090', err);
-    next(err)
+          .catch((err)=>{
+           
+            next(err);
   })
 });
 
-router.post('/user-login-page', (req, res, next) => {
+router.post('/login', (req, res, next) => {
   User.findOne({username: req.body.username})
   .then((theUser)=>{
     message = false
     if(theUser === null){
       message = `there is no username: ${req.body.username}`;
-      res.render('users/user-login-page', {message})
-      return;
+      res.render('users/user-login-page', {message});
     }
-    const isPassGood = bcryptjs.compareSync(req.body.password, theUser.password)
+    const isPassGood = bcryptjs.compareSync(req.body.password, theUser.password);
     if(isPassGood === false){
       message = `invalid password`;
-      res.render('users/user-login-page', {message})
-      return;
+      res.render('users/user-login-page', {message});
     }
     req.login(theUser, (err)=>{
       if(err){
         next(err);
       }
       else{
-        res.redirect('/user-page');
+        res.render('/users/user-page');
       }
     })
   })
@@ -69,12 +69,15 @@ router.post('/user-login-page', (req, res, next) => {
 })
 
 router.get('/user-page', (req, res, next)=>{
-  if(!req.user){
-    res.redirect('users/user-login-page')
-  } else {
-    let theUser = req.user;
-    theUser.prettyDate = theUser.birthday.toLocaleDateString("en-US");
-    res.render('users/user-page');
+
+
+    if(!req.body.user){
+      res.redirect('/signup');
+    } else {
+      let theUser = req.body.user;
+      console.log(theUser);
+      theUserprettyDate = theUser.birthday.toLocaleDateString("en-US");
+      res.redirect('/user-page');
   }
 })
 
@@ -104,7 +107,7 @@ router.post('/edit-interests', (req, res, next)=>{
   .then((theUser)=>{
     theUser.save();
     console.log('--------', theUser)
-    res.redirect('/user-page')
+    res.redirect('/users/user-page')
   })
   
   .catch((err)=>{
